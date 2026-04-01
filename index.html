@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input DMS - Bara Tama Wijaya</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
+        .container { max-width: 800px; margin: auto; display: flex; gap: 20px; flex-wrap: wrap; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); flex: 1; min-width: 300px; }
+        h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; color: #333; }
+        label { display: block; margin: 10px 0 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; margin-top: 20px; padding: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">DMS: Dry Mine System Input</h2>
+    <div class="container">
+        <div class="card">
+            <h3>Data Sump</h3>
+            <label>Site</label>
+            <select id="siteSump"><option value="WSL">WSL</option><option value="LCM">LCM</option><option value="NE">NE</option></select>
+            <label>Nama Sump</label>
+            <input type="text" id="sumpNameSump" placeholder="Contoh: Wijaya Timur">
+            <label>Elevasi (m)</label>
+            <input type="number" id="elevasi" step="0.001">
+            <label>Rain Act (mm)</label>
+            <input type="number" id="rainAct">
+            <button onclick="sendData('SUMP')">Simpan Sump</button>
+        </div>
+
+        <div class="card">
+            <h3>Data Pompa</h3>
+            <label>Site</label>
+            <select id="sitePump"><option value="WSL">WSL</option><option value="LCM">LCM</option><option value="NE">NE</option></select>
+            <label>Lokasi Sump (Pump Name)</label>
+            <input type="text" id="sumpNamePump" placeholder="Contoh: Wijaya Timur">
+            <label>Unit Code</label>
+            <input type="text" id="unitCode" placeholder="Contoh: WP-01">
+            <label>Debit Actual (m3/h)</label>
+            <input type="number" id="debitAct">
+            <label>Status</label>
+            <select id="status"><option value="Ready">Ready</option><option value="Standby">Standby</option><option value="Breakdown">Breakdown</option></select>
+            <button onclick="sendData('PUMP')" style="background: #28a745;">Simpan Pompa</button>
+        </div>
+    </div>
+
+    <script>
+        const scriptURL = 'TEMPEL_URL_WEB_APP_GOOGLE_SCRIPT_ANDA_DISINI';
+
+        function sendData(tipe) {
+            let payload = { type: tipe };
+            if (tipe === 'SUMP') {
+                payload.site = document.getElementById('siteSump').value;
+                payload.sump = document.getElementById('sumpNameSump').value;
+                payload.elevasi = document.getElementById('elevasi').value;
+                payload.r_act = document.getElementById('rainAct').value;
+            } else {
+                payload.site = document.getElementById('sitePump').value;
+                payload.sump = document.getElementById('sumpNamePump').value;
+                payload.unit = document.getElementById('unitCode').value;
+                payload.d_act = document.getElementById('debitAct').value;
+                payload.status = document.getElementById('status').value;
+            }
+
+            fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
+            .then(res => alert('Data ' + tipe + ' Berhasil Terkirim!'))
+            .catch(err => alert('Error: ' + err.message));
+        }
+    </script>
+</body>
+</html>
