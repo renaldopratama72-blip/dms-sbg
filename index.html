@@ -1,163 +1,144 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DMS Input System</title>
+    <title>Input DMS</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-        .card { background: white; border-radius: 12px; padding: 25px; width: 450px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h2 { color: #1a73e8; border-bottom: 2px solid #e8f0fe; padding-bottom: 10px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 900px; margin: auto; display: flex; gap: 20px; flex-wrap: wrap; }
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); flex: 1; min-width: 350px; }
+        h3 { color: #1a73e8; border-bottom: 2px solid #e8f0fe; padding-bottom: 10px; margin-top: 0; }
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; color: #444; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        label { display: block; margin-bottom: 5px; font-size: 14px; font-weight: 600; color: #5f6368; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #dadce0; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-sump { background: #1a73e8; }
-        .btn-sump:hover { background: #1557b0; }
         .btn-pump { background: #34a853; }
-        .btn-pump:hover { background: #2d8e47; }
+        button:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
+    <h2 style="text-align:center; color: #202124;">DMS: Data Entry System</h2>
+    <div class="container">
+        
+        <div class="card">
+            <h3>Data Sump</h3>
+            <div class="form-group">
+                <label>Site</label>
+                <select id="siteSump"><option value="WSL">WSL</option><option value="LCM">LCM</option><option value="NE">NE</option></select>
+            </div>
+            <div class="form-group">
+                <label>Nama Sump</label>
+                <input type="text" id="sumpS" placeholder="Contoh: Sump Wijaya Timur">
+            </div>
+            <div class="form-group">
+                <label>Elevasi (m)</label>
+                <input type="number" id="elevS" step="0.001">
+            </div>
+            <div class="form-group">
+                <label>Critical Elevation (m)</label>
+                <input type="number" id="critS" step="0.01" value="13.00">
+            </div>
+            <div class="form-group">
+                <label>Volume Survey (m3)</label>
+                <input type="number" id="volS">
+            </div>
+            <div class="form-group">
+                <label>Rain Plan (mm)</label>
+                <input type="number" id="rPlanS" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Rain Actual (mm)</label>
+                <input type="number" id="rActS" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Groundwater (m3)</label>
+                <input type="number" id="groundS" step="0.01">
+            </div>
+            <button class="btn-sump" onclick="send('SUMP')">Simpan Data Sump</button>
+        </div>
 
-<div class="header">
-    <h1>DRY MINE SYSTEM (DMS) INPUT</h1>
-    <p>Bara Tama Wijaya - PT. SBG</p>
-</div>
+        <div class="card">
+            <h3>Data Pompa</h3>
+            <div class="form-group">
+                <label>Site</label>
+                <select id="siteP"><option value="WSL">WSL</option><option value="LCM">LCM</option><option value="NE">NE</option></select>
+            </div>
+            <div class="form-group">
+                <label>Lokasi Sump (Sump Name)</label>
+                <input type="text" id="sumpP" placeholder="Sesuai nama Sump">
+            </div>
+            <div class="form-group">
+                <label>Unit Code</label>
+                <input type="text" id="unitP" placeholder="Contoh: WP-01">
+            </div>
+            <div class="form-group">
+                <label>Debit Plan (m3/h)</label>
+                <input type="number" id="dPlanP">
+            </div>
+            <div class="form-group">
+                <label>Debit Actual (m3/h)</label>
+                <input type="number" id="dActP">
+            </div>
+            <div class="form-group">
+                <label>EWH Plan (Jam)</label>
+                <input type="number" id="ePlanP" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>EWH Actual (Jam)</label>
+                <input type="number" id="eActP" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Status Unit</label>
+                <select id="statP">
+                    <option value="Ready - Operasi">Ready - Operasi</option>
+                    <option value="Standby - Kandas">Standby - Kandas</option>
+                    <option value="Breakdown">Breakdown</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Remarks</label>
+                <input type="text" id="remP" placeholder="Keterangan tambahan">
+            </div>
+            <button class="btn-pump" onclick="send('PUMP')">Simpan Data Pompa</button>
+        </div>
 
-<div class="container">
-    <div class="card">
-        <h2>Data Sump (Sheet 1)</h2>
-        <div class="form-group">
-            <label>Site</label>
-            <select id="s_site"><option value="WSL">WSL</option><option value="LCM">LCM</option><option value="NE">NE</option></select>
-        </div>
-        <div class="form-group">
-            <label>Pit (Sump Name)</label>
-            <input type="text" id="s_pit" placeholder="Contoh: Wijaya Timur">
-        </div>
-        <div class="form-group">
-            <label>Elevasi Air (m)</label>
-            <input type="number" id="s_elev" step="0.001">
-        </div>
-        <div class="form-group">
-            <label>Critical Elevation (m)</label>
-            <input type="number" id="s_crit" value="13.00">
-        </div>
-        <div class="form-group">
-            <label>Volume Air Survey (m3)</label>
-            <input type="number" id="s_vol">
-        </div>
-        <div class="form-group">
-            <label>Plan Curah Hujan (mm)</label>
-            <input type="number" id="s_phujan">
-        </div>
-        <div class="form-group">
-            <label>Curah Hujan Actual (mm)</label>
-            <input type="number" id="s_chujan">
-        </div>
-        <div class="form-group">
-            <label>Actual Catchment (Ha)</label>
-            <input type="number" id="s_catch" step="0.01">
-        </div>
-        <div class="form-group">
-            <label>Groundwater (m3)</label>
-            <input type="number" id="s_ground">
-        </div>
-        <div class="form-group">
-            <label>Status</label>
-            <select id="s_status"><option value="AMAN">AMAN</option><option value="WASPADA">WASPADA</option><option value="KRITIS">KRITIS</option></select>
-        </div>
-        <button class="btn-sump" onclick="sendData('SUMP')">SIMPAN DATA SUMP</button>
     </div>
 
-    <div class="card">
-        <h2>Data Pompa (Sheet 2)</h2>
-        <div class="form-group">
-            <label>Site</label>
-            <select id="p_site"><option value="WSL">WSL</option><option value="LCM">LCM</option><option value="NE">NE</option></select>
-        </div>
-        <div class="form-group">
-            <label>Pit (Lokasi Sump)</label>
-            <input type="text" id="p_pit" placeholder="Contoh: Wijaya Timur">
-        </div>
-        <div class="form-group">
-            <label>Unit Code</label>
-            <input type="text" id="p_unit" placeholder="Contoh: WP-01">
-        </div>
-        <div class="form-group">
-            <label>Debit Plan (m3/h)</label>
-            <input type="number" id="p_dplan">
-        </div>
-        <div class="form-group">
-            <label>Debit Actual (m3/h)</label>
-            <input type="number" id="p_dact">
-        </div>
-        <div class="form-group">
-            <label>EWH Plan (Jam)</label>
-            <input type="number" id="p_eplan">
-        </div>
-        <div class="form-group">
-            <label>EWH Actual (Jam)</label>
-            <input type="number" id="p_eact">
-        </div>
-        <div class="form-group">
-            <label>Status Operasi</label>
-            <select id="p_sops">
-                <option value="Ready - Operasi">Ready - Operasi</option>
-                <option value="Standby - Kandas">Standby - Kandas</option>
-                <option value="Breakdown">Breakdown</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Remarks</label>
-            <textarea id="p_remarks" rows="2"></textarea>
-        </div>
-        <button class="btn-pump" onclick="sendData('PUMP')">SIMPAN DATA POMPA</button>
-    </div>
-</div>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzVgslohLVzqM9XdnVBAslLKUid47gW9m--e7iKRPFPpItH6fcmalxkBYgGHCpUwFwSLw/exec';
 
-<script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyXKY7CfRfqckj6KZDjzsl5uV8f5vh16p7sxCR0j0N9SDypl1zpjnBaKLMI0ivTckzQgA/exec';
+        function send(type) {
+            let p = { type: type };
+            if (type === 'SUMP') {
+                p.site = document.getElementById('siteSump').value;
+                p.sump = document.getElementById('sumpS').value;
+                p.elevasi = document.getElementById('elevS').value;
+                p.crit_elev = document.getElementById('critS').value;
+                p.vol_surv = document.getElementById('volS').value;
+                p.r_plan = document.getElementById('rPlanS').value;
+                p.r_act = document.getElementById('rActS').value;
+                p.groundwater = document.getElementById('groundS').value;
+            } else {
+                p.site = document.getElementById('siteP').value;
+                p.sump = document.getElementById('sumpP').value;
+                p.unit = document.getElementById('unitP').value;
+                p.d_plan = document.getElementById('dPlanP').value;
+                p.d_act = document.getElementById('dActP').value;
+                p.e_plan = document.getElementById('ePlanP').value;
+                p.e_act = document.getElementById('eActP').value;
+                p.status = document.getElementById('statP').value;
+                p.remarks = document.getElementById('remP').value;
+            }
 
-    function sendData(tipe) {
-        let payload = { type: tipe };
-
-        if (tipe === 'SUMP') {
-            payload.site = document.getElementById('s_site').value;
-            payload.pit = document.getElementById('s_pit').value;
-            payload.elevasi = document.getElementById('s_elev').value;
-            payload.crit = document.getElementById('s_crit').value;
-            payload.vol = document.getElementById('s_vol').value;
-            payload.p_hujan = document.getElementById('s_phujan').value;
-            payload.c_hujan = document.getElementById('s_chujan').value;
-            payload.catchment = document.getElementById('s_catch').value;
-            payload.ground = document.getElementById('s_ground').value;
-            payload.status = document.getElementById('s_status').value;
-        } else {
-            payload.site = document.getElementById('p_site').value;
-            payload.pit = document.getElementById('p_pit').value;
-            payload.unit = document.getElementById('p_unit').value;
-            payload.d_plan = document.getElementById('p_dplan').value;
-            payload.d_act = document.getElementById('p_dact').value;
-            payload.e_plan = document.getElementById('p_eplan').value;
-            payload.e_act = document.getElementById('p_eact').value;
-            payload.s_ops = document.getElementById('p_sops').value;
-            payload.remarks = document.getElementById('p_remarks').value;
+            fetch(scriptURL, { method: 'POST', body: JSON.stringify(p) })
+            .then(res => {
+                alert('Data ' + type + ' berhasil disimpan!');
+                location.reload();
+            })
+            .catch(err => alert('Gagal: ' + err.message));
         }
-
-        fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
-        .then(response => {
-            alert('Sukses! Data ' + tipe + ' tersimpan.');
-            // Kosongkan input tertentu setelah simpan
-            if(tipe === 'SUMP') document.getElementById('s_elev').value = '';
-            else document.getElementById('p_dact').value = '';
-        })
-        .catch(error => alert('Gagal mengirim data!'));
-    }
-</script>
-
+    </script>
 </body>
 </html>
