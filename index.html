@@ -1,102 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input DMS</title>
+    <title>Input DMS - Bara Tama Wijaya</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 20px; }
         .container { max-width: 900px; margin: auto; display: flex; gap: 20px; flex-wrap: wrap; }
         .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); flex: 1; min-width: 350px; }
-        .form-group { margin-bottom: 12px; }
+        .header-section { width: 100%; background: #ffffff; padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; border-top: 5px solid #1a73e8; }
+        h3 { color: #1a73e8; border-bottom: 2px solid #e8f0fe; padding-bottom: 10px; margin-top: 0; }
+        .form-group { margin-bottom: 12px; text-align: left; }
         label { display: block; margin-bottom: 5px; font-size: 13px; font-weight: 600; color: #5f6368; }
-        input, select { width: 100%; padding: 8px; border: 1px solid #dadce0; border-radius: 6px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 10px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #dadce0; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 15px; }
         .btn-sump { background: #1a73e8; }
         .btn-pump { background: #34a853; }
-        .tgl-section { background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center; border: 2px solid #1a73e8; }
+        button:hover { opacity: 0.8; }
+        #globalDate { width: auto; min-width: 200px; font-weight: bold; color: #1a73e8; border: 2px solid #1a73e8; }
     </style>
 </head>
 <body>
 
-    <h2 style="text-align:center;">DMS: Data Entry System</h2>
-
     <div class="container">
-        <div class="card" style="flex: 100%; min-width: 100%; text-align: center;">
-            <label style="font-size: 16px; color: #1a73e8;">Pilih Tanggal Laporan:</label>
-            <input type="date" id="globalDate" style="width: 200px; text-align: center; font-size: 16px; font-weight: bold;">
+        <div class="header-section">
+            <h2 style="margin-bottom: 15px;">DMS: Dry Mine System Data Entry</h2>
+            <div class="form-group">
+                <label style="text-align: center; font-size: 16px;">Pilih Tanggal Laporan:</label>
+                <input type="date" id="globalDate">
+            </div>
         </div>
-    </div>
-    <br>
 
-    <div class="container">
         <div class="card">
             <h3>Data Sump</h3>
-            <div class="form-group"><label>Site</label><select id="siteS"><option value="WSL">WSL</option><option value="LCM">LCM</option><option value="NE">NE</option></select></div>
-            <div class="form-group"><label>Nama Sump</label><input type="text" id="sumpS" placeholder="Nama Sump"></div>
-            <div class="form-group"><label>Elevasi (m)</label><input type="number" id="elevS" step="0.001"></div>
-            <div class="form-group"><label>Crit Elev (m)</label><input type="number" id="critS" value="13.00"></div>
-            <div class="form-group"><label>Vol Survey (m3)</label><input type="number" id="volS"></div>
-            <div class="form-group"><label>Rain Plan (mm)</label><input type="number" id="rPlanS"></div>
-            <div class="form-group"><label>Rain Act (mm)</label><input type="number" id="rActS"></div>
-            <div class="form-group"><label>Groundwater (m3)</label><input type="number" id="groundS"></div>
-            <button class="btn btn-sump" onclick="send('SUMP')">Simpan Data Sump</button>
+            <div class="form-group">
+                <label>Site</label>
+                <select id="siteS"><option value="WSL">WSL</option><option value="LCM">LCM</option><option value="NE">NE</option></select>
+            </div>
+            <div class="form-group">
+                <label>Nama Sump</label>
+                <input type="text" id="sumpS" placeholder="Contoh: Sump Wijaya Timur">
+            </div>
+            <div class="form-group">
+                <label>Elevasi (m)</label>
+                <input type="number" id="elevS" step="0.001">
+            </div>
+            <div class="form-group">
+                <label>Critical Elevation (m)</label>
+                <input type="number" id="critS" step="0.01" value="13.00">
+            </div>
+            <div class="form-group">
+                <label>Volume Survey (m3)</label>
+                <input type="number" id="volS">
+            </div>
+            <div class="form-group">
+                <label>Rain Plan (mm)</label>
+                <input type="number" id="rPlanS" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Rain Actual (mm)</label>
+                <input type="number" id="rActS" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Groundwater (m3)</label>
+                <input type="number" id="groundS" step="0.01">
+            </div>
+            <button class="btn btn-sump" onclick="sendData('SUMP')">Simpan Data Sump</button>
         </div>
 
         <div class="card">
             <h3>Data Pompa</h3>
-            <div class="form-group"><label>Site</label><select id="siteP"><option value="WSL">WSL</option><option value="LCM">LCM</option><option value="NE">NE</option></select></div>
-            <div class="form-group"><label>Lokasi Sump</label><input type="text" id="sumpP" placeholder="Sesuai nama Sump"></div>
-            <div class="form-group"><label>Unit Code</label><input type="text" id="unitP" placeholder="Contoh: WP-01"></div>
-            <div class="form-group"><label>Debit Plan (m3/h)</label><input type="number" id="dPlanP"></div>
-            <div class="form-group"><label>Debit Act (m3/h)</label><input type="number" id="dActP"></div>
-            <div class="form-group"><label>EWH Plan (Jam)</label><input type="number" id="ePlanP"></div>
-            <div class="form-group"><label>EWH Act (Jam)</label><input type="number" id="eActP"></div>
-            <div class="form-group"><label>Status</label><select id="statP"><option value="Ready">Ready</option><option value="Standby">Standby</option><option value="Breakdown">Breakdown</option></select></div>
-            <div class="form-group"><label>Remarks</label><input type="text" id="remP"></div>
-            <button class="btn btn-pump" onclick="send('PUMP')">Simpan Data Pompa</button>
+            <div class="form-group">
+                <label>Site</label>
+                <select id="siteP"><option value="WSL">WSL</option><option value="LCM">LCM</option><option value="NE">NE</option></select>
+            </div>
+            <div class="form-group">
+                <label>Lokasi Sump (Sump Name)</label>
+                <input type="text" id="sumpP" placeholder="Sesuai Nama Sump">
+            </div>
+            <div class="form-group">
+                <label>Unit Code</label>
+                <input type="text" id="unitP" placeholder="Contoh: WP-01">
+            </div>
+            <div class="form-group">
+                <label>Debit Plan (m3/h)</label>
+                <input type="number" id="dPlanP">
+            </div>
+            <div class="form-group">
+                <label>Debit Actual (m3/h)</label>
+                <input type="number" id="dActP">
+            </div>
+            <div class="form-group">
+                <label>EWH Plan (Jam)</label>
+                <input type="number" id="ePlanP" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>EWH Actual (Jam)</label>
+                <input type="number" id="eActP" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Status Unit</label>
+                <select id="statP">
+                    <option value="Ready - Operasi">Ready - Operasi</option>
+                    <option value="Standby - Kandas">Standby - Kandas</option>
+                    <option value="Breakdown">Breakdown</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Remarks</label>
+                <input type="text" id="remP" placeholder="Keterangan tambahan">
+            </div>
+            <button class="btn btn-pump" onclick="sendData('PUMP')">Simpan Data Pompa</button>
         </div>
     </div>
 
     <script>
-        // Set tanggal default ke hari ini
+        // Otomatis set tanggal ke hari ini saat web dibuka
         document.getElementById('globalDate').valueAsDate = new Date();
 
+        // GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE SCRIPT ANDA
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyhMHhlRw7K4fYOHjWfMNDqsmRXvrFlFgKTu559594IbiphaSw9QUFSoUm16TE8RDoA/exec';
 
-        function send(type) {
-            let tgl = document.getElementById('globalDate').value;
-            if(!tgl) return alert('Pilih tanggal dulu!');
+        function sendData(type) {
+            const tglVal = document.getElementById('globalDate').value;
+            if(!tglVal) return alert('Pilih tanggal laporan terlebih dahulu!');
 
-            let p = { type: type, tgl: tgl };
-            
+            let payload = { type: type, tgl: tglVal };
+
             if (type === 'SUMP') {
-                p.site = document.getElementById('siteS').value;
-                p.sump = document.getElementById('sumpS').value;
-                p.elevasi = document.getElementById('elevS').value;
-                p.crit_elev = document.getElementById('critS').value;
-                p.vol_surv = document.getElementById('volS').value;
-                p.r_plan = document.getElementById('rPlanS').value;
-                p.r_act = document.getElementById('rActS').value;
-                p.groundwater = document.getElementById('groundS').value;
+                payload.site = document.getElementById('siteS').value;
+                payload.sump = document.getElementById('sumpS').value;
+                payload.elevasi = document.getElementById('elevS').value;
+                payload.crit_elev = document.getElementById('critS').value;
+                payload.vol_surv = document.getElementById('volS').value;
+                payload.r_plan = document.getElementById('rPlanS').value;
+                payload.r_act = document.getElementById('rActS').value;
+                payload.groundwater = document.getElementById('groundS').value;
             } else {
-                p.site = document.getElementById('siteP').value;
-                p.sump = document.getElementById('sumpP').value;
-                p.unit = document.getElementById('unitP').value;
-                p.d_plan = document.getElementById('dPlanP').value;
-                p.d_act = document.getElementById('dActP').value;
-                p.e_plan = document.getElementById('ePlanP').value;
-                p.e_act = document.getElementById('eActP').value;
-                p.status = document.getElementById('statP').value;
-                p.remarks = document.getElementById('remP').value;
+                payload.site = document.getElementById('siteP').value;
+                payload.sump = document.getElementById('sumpP').value;
+                payload.unit = document.getElementById('unitP').value;
+                payload.d_plan = document.getElementById('dPlanP').value;
+                payload.d_act = document.getElementById('dActP').value;
+                payload.e_plan = document.getElementById('ePlanP').value;
+                payload.e_act = document.getElementById('eActP').value;
+                payload.status = document.getElementById('statP').value;
+                payload.remarks = document.getElementById('remP').value;
             }
 
-            fetch(scriptURL, { method: 'POST', body: JSON.stringify(p) })
+            fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
             .then(res => {
-                alert('Data ' + type + ' Berhasil!');
-                // Tidak reload agar tanggal tidak reset jika mau input pompa lain
+                alert('Data ' + type + ' Berhasil Disimpan!');
             })
-            .catch(err => alert('Gagal: ' + err.message));
+            .catch(err => alert('Gagal mengirim data: ' + err.message));
         }
     </script>
 </body>
