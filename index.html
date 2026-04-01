@@ -148,11 +148,18 @@
                 payload.remarks = document.getElementById('remP').value;
             }
 
-            fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
-            .then(res => {
-                alert('Data ' + type + ' Berhasil Disimpan!');
-            })
-            .catch(err => alert('Gagal mengirim data: ' + err.message));
+fetch(scriptURL, { 
+    method: 'POST', 
+    mode: 'no-cors', // Tambahkan baris ini
+    headers: {
+        'Content-Type': 'text/plain', // Ubah ini
+    },
+    body: JSON.stringify(payload) 
+})
+.then(() => {
+    alert('Data ' + type + ' Berhasil Disimpan!');
+})
+.catch(err => alert('Gagal: ' + err.message));
         }
     </script>
 </body>
