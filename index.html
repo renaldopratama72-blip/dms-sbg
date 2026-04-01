@@ -17,7 +17,7 @@
         .btn-sump { background: #1a73e8; }
         .btn-pump { background: #28a745; }
         .btn:hover { opacity: 0.8; }
-        #globalDate { width: 200px; font-weight: bold; border: 2px solid #1a73e8; color: #1a73e8; }
+        #globalDate { width: 200px; font-weight: bold; border: 2px solid #1a73e8; color: #1a73e8; text-align: center; }
     </style>
 </head>
 <body>
@@ -39,36 +39,19 @@
             </div>
             <div class="form-group">
                 <label>Pit / Nama Sump</label>
-                <input type="text" id="sumpS" placeholder="Contoh: Sump Wijaya Timur">
+                <select id="sumpS">
+                    <option value="SUMP WIJAYA TIMUR">SUMP WIJAYA TIMUR</option>
+                    <option value="SUMP WIJAYA BARAT">SUMP WIJAYA BARAT</option>
+                    <option value="SUMP F02">SUMP F02</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label>Elevasi Air (m)</label>
-                <input type="number" id="elevS" step="0.001">
-            </div>
-            <div class="form-group">
-                <label>Critical Elevation (m)</label>
-                <input type="number" id="critS" step="0.01" value="11.30">
-            </div>
-            <div class="form-group">
-                <label>Volume Air Survey (m3)</label>
-                <input type="number" id="volS">
-            </div>
-            <div class="form-group">
-                <label>Plan Curah Hujan (mm)</label>
-                <input type="number" id="rPlanS" step="0.01">
-            </div>
-            <div class="form-group">
-                <label>Curah Hujan (mm)</label>
-                <input type="number" id="rActS" step="0.01">
-            </div>
-            <div class="form-group">
-                <label>Actual Catchment (Ha)</label>
-                <input type="number" id="catchS" step="0.01">
-            </div>
-            <div class="form-group">
-                <label>Groundwater (m3)</label>
-                <input type="number" id="groundS" step="0.01">
-            </div>
+            <div class="form-group"><label>Elevasi Air (m)</label><input type="number" id="elevS" step="0.001" value="0.00"></div>
+            <div class="form-group"><label>Critical Elevation (m)</label><input type="number" id="critS" step="0.01" value="11.30"></div>
+            <div class="form-group"><label>Volume Air Survey (m3)</label><input type="number" id="volS" value="0"></div>
+            <div class="form-group"><label>Plan Curah Hujan (mm)</label><input type="number" id="rPlanS" step="0.01" value="0.00"></div>
+            <div class="form-group"><label>Curah Hujan (mm)</label><input type="number" id="rActS" step="0.01" value="0.00"></div>
+            <div class="form-group"><label>Actual Catchment (Ha)</label><input type="number" id="catchS" step="0.01" value="0.00"></div>
+            <div class="form-group"><label>Groundwater (m3)</label><input type="number" id="groundS" step="0.01" value="0.00"></div>
             <button class="btn btn-sump" onclick="send('SUMP')">Simpan Sump</button>
         </div>
 
@@ -80,28 +63,26 @@
             </div>
             <div class="form-group">
                 <label>Pit (Lokasi Sump)</label>
-                <input type="text" id="sumpP" placeholder="Contoh: Sump Wijaya Timur">
+                <select id="sumpP">
+                    <option value="SUMP WIJAYA TIMUR">SUMP WIJAYA TIMUR</option>
+                    <option value="SUMP WIJAYA BARAT">SUMP WIJAYA BARAT</option>
+                    <option value="SUMP F02">SUMP F02</option>
+                </select>
             </div>
             <div class="form-group">
-                <label>Unit Code</label>
-                <input type="text" id="unitP" placeholder="Contoh: WP-01">
+                <label>Unit Code (Nama Pompa)</label>
+                <select id="unitP">
+                    <option value="WP1001">WP1001</option>
+                    <option value="WP1002">WP1002</option>
+                    <option value="WP1202">WP1202</option>
+                    <option value="WP1203">WP1203</option>
+                    <option value="WP803">WP803</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label>Debit Plan (m3/h)</label>
-                <input type="number" id="dPlanP" value="500">
-            </div>
-            <div class="form-group">
-                <label>Debit Actual (m3/h)</label>
-                <input type="number" id="dActP">
-            </div>
-            <div class="form-group">
-                <label>EWH Plan (Jam)</label>
-                <input type="number" id="ePlanP" value="20">
-            </div>
-            <div class="form-group)
-                <label>EWH Actual (Jam)</label>
-                <input type="number" id="eActP">
-            </div>
+            <div class="form-group"><label>Debit Plan (m3/h)</label><input type="number" id="dPlanP" value="500"></div>
+            <div class="form-group"><label>Debit Actual (m3/h)</label><input type="number" id="dActP" value="0"></div>
+            <div class="form-group"><label>EWH Plan (Jam)</label><input type="number" id="ePlanP" value="20"></div>
+            <div class="form-group"><label>EWH Actual (Jam)</label><input type="number" id="eActP" value="0"></div>
             <div class="form-group">
                 <label>Status Operasi</label>
                 <select id="statP">
@@ -110,10 +91,7 @@
                     <option value="Breakdown">Breakdown</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label>Remarks</label>
-                <input type="text" id="remP" placeholder="Keterangan tambahan">
-            </div>
+            <div class="form-group"><label>Remarks</label><input type="text" id="remP" placeholder="Keterangan tambahan"></div>
             <button class="btn btn-pump" onclick="send('PUMP')">Simpan Pompa</button>
         </div>
     </div>
@@ -121,7 +99,6 @@
     <script>
         document.getElementById('globalDate').valueAsDate = new Date();
 
-        // GANTI DENGAN URL WEB APP ANDA
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwXgHczhjSZELytH6gTd1tg1CGSHDm7gXbNb9koa2jP-P-saNUOl0n0arDwULfwNn8-hA/exec';
 
         function send(type) {
@@ -140,7 +117,6 @@
                 p.r_act = document.getElementById('rActS').value;
                 p.catchment = document.getElementById('catchS').value;
                 p.groundwater = document.getElementById('groundS').value;
-                // Logika status otomatis berdasarkan elevasi vs critical
                 p.status_sump = parseFloat(p.elevasi) > parseFloat(p.crit_elev) ? "WASPADA" : "AMAN";
             } else {
                 p.site = document.getElementById('siteP').value;
